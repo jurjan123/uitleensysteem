@@ -35,14 +35,14 @@
     </div>
     
     <div>
-        <p>Nieuw Wachtwoord (optioneel)</p>
+        <p>Wachtwoord </p>
         <input type="password" class="rounded-md mb-5 pl-2 w-11/12" name="password" >
         @error("password")
         <p class="text-red-500 text-xs -mt-3">{{$message}}</p>
         @enderror
     </div>
     <div>
-        <p>Nieuw Wachtwoord Herhalen</p>
+        <p>Wachtwoord Herhalen</p>
         <input type="password" name="password_confirmation" class="rounded-md mb-5 pl-2  w-11/12" >
         @error("password_confirmation")
         <p class="text-red-500 text-xs -mt-3  ">{{$message}}</p>

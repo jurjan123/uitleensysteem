@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("title");
             $table->string("description");
-            $table->string("image");
+            $table->string("image")->default("productdefault.jpeg");
             $table->dateTime("max_lease");
             $table->decimal("warranty");
             $table->string("barcode_number");

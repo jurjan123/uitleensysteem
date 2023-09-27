@@ -1,9 +1,13 @@
 <?php
 
+use App\Http\Controllers\AuthenticatedSessionController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
+use Illuminate\Session\Middleware\AuthenticateSession;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,12 +27,19 @@ Route::get('/', function () {
 Route::group(["middleware" => "guest"], function(){
     Route::match(["post", "get"], "/register", [RegisterController::class, "index"])->name("register");
     Route::post("/register/store", [RegisterController::class, "store"])->name("register.store");
+    Route::get("/login", [AuthenticatedSessionController::class, "index"])->name("login");
+    Route::post("/login/store", [AuthenticatedSessionController::class, "store"])->name("login.store");
 });
 
 Route::group(["middleware" => "auth"], function(){
+    Route::get("/contact", [AuthenticatedSessionController::class, "contact"])->name("contact");
+    Route::post("/storecontact", [AuthenticatedSessionController::class, "storeContact"])->name("contact.store");
     Route::post("/logout", [UserController::class, "destroy"])->name("logout");
 
     Route::group(["prefix" => "admin"], function(){
+        Route::get("/", function(){
+            return view("admin.index");
+        })->name("admin.index");
 
         Route::group(["prefix" => "users"], function(){
             Route::get("",[UserController::class, "index"])->name("admin.users.index");
@@ -39,6 +50,30 @@ Route::group(["middleware" => "auth"], function(){
                 Route::match(["post", "get"], "/edit", [UserController::class, "edit"])->name("admin.users.edit");
                 Route::put("/", [UserController::class, "update"])->name("admin.users.update");
                 Route::delete("/delete", [UserController::class, "delete"])->name("admin.users.delete");
+            });
+        });
+
+        Route::group(["prefix" => "products"], function(){
+            Route::get("/", [ProductController::class, "index"])->name("admin.products.index");
+            Route::get("/create", [ProductController::class, "create"])->name("admin.products.create");
+            Route::post("/store", [ProductController::class, "store"])->name("admin.products.store");
+           
+            Route::group(["prefix" => "{product}"], function(){
+                Route::delete("/", [ProductController::class, "delete"])->name("admin.products.delete");
+                Route::post("/edit", [ProductController::class, "edit"])->name("admin.products.edit");
+                Route::put("/", [ProductController::class, "update"])->name("admin.products.update");
+            });
+        });
+
+        Route::group(["prefix" => "categories"], function(){
+            Route::get("/", [CategoryController::class, "index"])->name("admin.categories.index");
+            Route::get("/create", [CategoryController::class, "create"])->name("admin.categories.create");
+            Route::post("/store", [CategoryController::class, "store"])->name("admin.categories.store");
+
+            Route::group(["prefix" => "{category}"], function(){
+                Route::delete("/delete", [CategoryController::class, "delete"])->name("admin.categories.delete");
+                Route::get("/edit", [CategoryController::class, "edit"])->name("admin.categories.edit");
+                Route::put("/", [CategoryController::class, "update"])->name("admin.categories.update");
             });
         });
         
