@@ -4,7 +4,7 @@
         <div class=" w-2/3 h-3/4  bg-gray-100 text-black ml-64 mt-20 p-6 rounded-lg shadow-md">
             <div>
                 <h2 class="text-center text-3xl font-extrabold">
-                    Registreren
+                    Inloggen
                 </h2>
             </div>
             <form action="{{route("login.store")}}" method="POST" class="space-y-5 ml-48 grid grid-cols-2   justify-center ">

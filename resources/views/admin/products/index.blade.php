@@ -13,6 +13,7 @@
                   <tr>
                     <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Titel</th>
                     <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Foto</th>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Categorie</th>
                     <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Garantie</th>
                     <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Maximale leenduur</th>
                     <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Acties</th>
@@ -35,7 +36,11 @@
                       </div>
                       </td>
                       <td class="px-6 py-4 whitespace-no-wrap">
-                        <img class="h-10 w-10 rounded-full" src="{{url("images/".$product->image)}}" alt="User image">
+                        <img class="h-10 w-10" src="{{url("images/".$product->image)}}" alt="User image">
+                        <div class="text-sm leading-5 text-gray-900"></div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-no-wrap">
+                        <p>@if(!empty($product->categories->title)) {{$product->categories->title}} @else geen categorie    @endif </p>
                         <div class="text-sm leading-5 text-gray-900"></div>
                       </td>
                       <td class="px-6 py-4 whitespace-no-wrap">
@@ -68,9 +73,9 @@
                     @endforeach
 
                   </tbody>
-                  {{$products->links()}}
+                  
                 </table>
-                <div class="p-4 "></div>
+                <div class="p-4 ">{{$products->links()}}</div>
               </div>
         
     </div>

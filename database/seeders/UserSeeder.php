@@ -25,6 +25,7 @@ class UserSeeder extends Seeder
                 "password" => Hash::make("Welkom123"),
                 "user_image" => "preset.png",
                 "phone_number" => "15660810",
+                "role" => "admin",
                 "created_at" => $ldate,
                 "updated_at" => $ldate,
                 
@@ -37,6 +38,7 @@ class UserSeeder extends Seeder
                 "password" => Hash::make("Welkom123"),
                 "phone_number" => "15660810",
                 "user_image" => "preset.png",
+                "role" => "student",
                 "created_at" => $ldate,
                 "updated_at" => $ldate,
                 

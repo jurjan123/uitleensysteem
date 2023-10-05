@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string("user_image")->default("preset.png");
+            $table->string("role")->default("student");
             $table->rememberToken();
             $table->timestamps();
         });

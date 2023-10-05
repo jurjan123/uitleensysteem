@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\AuthenticatedSessionController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
-use Illuminate\Support\Facades\Route;
 use App\Models\User;
-use App\Http\Controllers\RegisterController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use Illuminate\Session\Middleware\AuthenticateSession;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\AuthenticatedSessionController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,9 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 Route::get('/', function () {
     return view('index');
 })->name("index");
+Route::get("/reserveren", [AuthenticatedSessionController::class, "categoryView"])->name("categories");
+Route::get("/reserveren/{category}", [AuthenticatedSessionController::class, "categoryShow"])->name("categories.show");
+
 
 Route::group(["middleware" => "guest"], function(){
     Route::match(["post", "get"], "/register", [RegisterController::class, "index"])->name("register");
@@ -34,8 +38,17 @@ Route::group(["middleware" => "guest"], function(){
 Route::group(["middleware" => "auth"], function(){
     Route::get("/contact", [AuthenticatedSessionController::class, "contact"])->name("contact");
     Route::post("/storecontact", [AuthenticatedSessionController::class, "storeContact"])->name("contact.store");
-    Route::post("/logout", [UserController::class, "destroy"])->name("logout");
 
+    Route::group(["prefix" => "cart"], function(){
+        Route::get("/", [AuthenticatedSessionController::class, "cart"])->name("cart");
+        Route::post("/add/{id}", [CartController::class, "addToCart"])->name("cart.add");
+        Route::delete("/delete/{id}", [CartController::class, "deleteFromCart"])->name("cart.delete");
+        Route::post("/update/{productId}", [CartController::class, "updateFromCart"])->name("cart.update");
+        Route::get("/order", [CartController::class, "storeOrderData"])->name("cart.order");
+    });
+
+    Route::post("/logout", [UserController::class, "destroy"])->name("logout");
+    
     Route::group(["prefix" => "admin"], function(){
         Route::get("/", function(){
             return view("admin.index");
@@ -60,7 +73,7 @@ Route::group(["middleware" => "auth"], function(){
            
             Route::group(["prefix" => "{product}"], function(){
                 Route::delete("/", [ProductController::class, "delete"])->name("admin.products.delete");
-                Route::post("/edit", [ProductController::class, "edit"])->name("admin.products.edit");
+                Route::match(["get", "post"],"/edit", [ProductController::class, "edit"])->name("admin.products.edit");
                 Route::put("/", [ProductController::class, "update"])->name("admin.products.update");
             });
         });
@@ -79,6 +92,20 @@ Route::group(["middleware" => "auth"], function(){
         
     });
     
+
+    Route::get("session", function(Request $request){
+        
+        echo "<pre>";
+        print_r($request->session()->all()) ;
+        echo "</pre>";
+        echo "<br><br>";
+        echo "<pre>";
+        print_r($request->session()->get("products"));
+        echo "</pre>";
+
+       
+    });
+
 });
 
 

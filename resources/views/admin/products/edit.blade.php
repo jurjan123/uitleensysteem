@@ -25,11 +25,13 @@
         @error("user_image")
         <p class="text-red-500 text-xs -mt-3">{{$message}}</p>
         @enderror
+        <p>huidige foto</p>
+        <img class="mt-1 mb-5" src="{{url("images/".$product->image)}}" alt="" width="200" height="100">
     </div>
     <div>
-        <p>Max lease</p>
+        <p>Maximale leenduur</p>
         <!--<input for="image" :value="__('Kies datum')" />-->
-        <input type="datetime-local" class="rounded-md mb-5 pl-2 p-1  w-6/12 @error("max_lease") border-2 border-red-500 @enderror"
+        <input type="date" class="rounded-md mb-5 pl-2 p-1  w-6/12 @error("max_lease") border-2 border-red-500 @enderror"
         name="max_lease" step="any" value="{{old("max_lease", $product->max_lease)}}">
        
         @error("max_lease")
@@ -38,12 +40,34 @@
     </div>
     
     <div>
-        <p>Warranty </p>
+        <p>Garantie </p>
         <input type="text" class="rounded-md mb-5 pl-2 w-11/12 @error("warranty") border-2 border-red-500 @enderror" name="warranty" value="{{old("warranty", $product->warranty)}}" >
         @error("warranty")
         <p class="text-red-500 text-xs -mt-3">{{$message}}</p>
         @enderror
     </div>
+
+    <div class="mb-3 mt-3 w-11/12 d-column">
+        <label for="formFile"  class="form-label">Kies categorie </label>
+        <div class="mt-1">
+
+        <select class="p-2 rounded-md w-40 " name="category_id">
+              
+            <option value="{{$product->category_id}}">{{$categoryname}}</option>
+            @foreach($categories as $category)
+            @if($category->title == $categoryname)
+
+            @else
+            <option value="{{$category->id}}">{{$category->title}}</option>
+            @endif
+            @endforeach
+        </select>
+       
+        </div>
+       
+    </div>
+
+
     <div>
         <p>Barcode nummer</p>
         <input type="text" name="barcode_number" class="rounded-md mb-5 pl-2  w-11/12" value="{{old("barcode_number", $product->barcode_number)}}" >

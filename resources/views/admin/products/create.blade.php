@@ -27,9 +27,9 @@
         @enderror
     </div>
     <div>
-        <p>Max lease</p>
+        <p>Maximale leenduur</p>
         <!--<input for="image" :value="__('Kies datum')" />-->
-        <input type="datetime-local" class="rounded-md mb-5 pl-2 p-1  w-6/12 @error("max_lease") border-2 border-red-500 @enderror"
+        <input type="date" class="rounded-md mb-5 pl-2 p-1  w-6/12 @error("max_lease") border-2 border-red-500 @enderror"
         name="max_lease" step="any" value="{{old("max_lease")}}">
        
         @error("max_lease")
@@ -38,12 +38,29 @@
     </div>
     
     <div>
-        <p>Warranty </p>
+        <p>Garantie </p>
         <input type="text" class="rounded-md mb-5 pl-2 w-11/12 @error("warranty") border-2 border-red-500 @enderror" name="warranty" value="{{old("warranty")}}" >
         @error("warranty")
         <p class="text-red-500 text-xs -mt-3">{{$message}}</p>
         @enderror
     </div>
+
+    <div class="mb-3 mt-3 w-11/12 d-column">
+        <label for="formFile"  class="form-label">Kies categorie </label>
+        <div class="mt-1">
+
+        <select class="p-2  items-center rounded-md w-40 " name="category_id">
+            <option value="">kies categorie</option>
+            @foreach($categories as $category)
+            <option value="{{$category->id}}">{{$category->title}}</option>
+            @endforeach
+        </select>
+       
+        </div>
+       
+    </div>
+
+    
     <div>
         <p>Barcode nummer</p>
         <input type="text" name="barcode_number" class="rounded-md mb-5 pl-2  w-11/12" >

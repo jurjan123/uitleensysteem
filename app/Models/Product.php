@@ -15,7 +15,12 @@ class Product extends Model
         "image",
         "barcode_number",
         "warranty",
-        "max_lease"
+        "max_lease",
+        "category_id"
 
     ];
+
+    public function categories(){
+        return $this->belongsTo(Category::class, "category_id");
+    }
 }

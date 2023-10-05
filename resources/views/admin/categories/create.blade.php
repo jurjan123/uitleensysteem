@@ -22,7 +22,7 @@
     <div class="mt-3">
         <p>Afbeelding</p>
         <input id="image" name="image" value="{{old("image")}}" placeholder="Afbeelding kiezen" type="file" class="rounded-md mb-5  w-6/12 @error("image") border-2 border-red-500 @enderror"  autofocus autocomplete="name" />
-        @error("user_image")
+        @error("image")
         <p class="text-red-500 text-xs -mt-3">{{$message}}</p>
         @enderror
     </div>

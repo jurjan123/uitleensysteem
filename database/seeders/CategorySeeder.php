@@ -33,7 +33,40 @@ class CategorySeeder extends Seeder
             [
                 "title" => "televisies",
                 "description" => "turen naar een groot beeldscherm",
-            ]
+            ],
+            [
+                "title" => "televisies",
+                "description" => "turen naar een groot beeldscherm",
+            ],
+            [
+                "title" => "televisies",
+                "description" => "turen naar een groot beeldscherm",
+            ],
+            [
+                "title" => "televisies",
+                "description" => "turen naar een groot beeldscherm",
+            ],
+            [
+                "title" => "televisies",
+                "description" => "turen naar een groot beeldscherm",
+            ],
+            [
+                "title" => "televisies",
+                "description" => "turen naar een groot beeldscherm",
+            ],
+            [
+                "title" => "televisies",
+                "description" => "turen naar een groot beeldscherm",
+            ],
+            [
+                "title" => "televisies",
+                "description" => "turen naar een groot beeldscherm",
+            ],
+            [
+                "title" => "televisies",
+                "description" => "turen naar een groot beeldscherm",
+            ],
+            
             ]);
     }
 }

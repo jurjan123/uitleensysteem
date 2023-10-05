@@ -11,3 +11,36 @@ username.addEventListener('click', function() {
       philosopersItem.classList.remove("text-gray-100")    
     }
   });
+
+
+  var category_item = document.getElementById("category_item");
+var category_dropdown = document.getElementById("category_dropdown");
+category_item.addEventListener('click', function() {
+    if (category_dropdown.classList.contains('hidden')) {
+      category_dropdown.classList.remove('hidden');
+      category_dropdown.classList.add('visible');
+     
+    } else {
+      category_dropdown.classList.remove('visible');
+      category_dropdown.classList.add('hidden');
+      category_dropdown.classList.remove("text-gray-100")    
+    }
+  });
+
+  function updateQuantity(productId, selectElement) {
+    fetch('/cart/update/' + productId, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            // Add this to make sure Laravel handles the request as AJAX
+            'X-Requested-With': 'XMLHttpRequest', 
+            // Add the CSRF token, Laravel needs this for POST requests
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            quantity: selectElement.value
+        })
+    })
+    .then(response => location.reload())
+    .catch(error => console.error('Error:', error));
+}

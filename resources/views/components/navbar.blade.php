@@ -12,17 +12,19 @@
     <body class="p-0 m-0">
         <nav class="bg-dark-blue-rgb p-6 pl-16 flex justify-between">
             <ul class="flex gap-6 text-white text-2xl  justify-items-start cursor-pointer">
-                <li class="ml-20 mt-1 @if(Route::is("index")) bg-purple-500 @endif hover:bg-purple-500 hover:rounded-sm"><a href="{{route("index")}}">Home</a></li>
-                <li class="mt-1 hover:bg-purple-500  hover:rounded-sm ">Reserveren</li>
-                <li class="mt-1 hover:bg-purple-500 hover:rounded-sm"><a href="{{route("contact")}}">Contact</a></li>
+                <li class="ml-20 mt-1 rounded-sm @if(Route::is("index")) bg-purple-rgb @endif hover:bg-purple-rgb "><a href="{{route("index")}}">Home</a></li>
+                <li class="mt-1 rounded-sm @if(Route::is("categories")) bg-purple-rgb @endif hover:bg-purple-rgb  "><a href="{{route("categories")}}">Reserveren</a></li>
+                <li class="mt-1 rounded-sm @if(Route::is("contact")) bg-purple-rgb @endif hover:bg-purple-rgb "><a href="{{route("contact")}}">Contact</a></li>
     
                 <input type="text" class="ml-36 w-96 text-black  rounded-sm text-sm pl-2 p-2 " placeholder="Zoek naar materialen....." >
                 <div class="right-28 w-48 justify-between absolute flex text-md">
                 @guest
-                <li class="mt-1"><a href="{{route("login")}}">Inloggen</a></li>
-                <li class="mt-1"><a href="{{route("register")}}">Registreren</a></li>
+                <li class="mt-1 text-xl"><a href="{{route("login")}}">Inloggen</a></li>
+                <li class="mt-1 text-xl"><a href="{{route("register")}}">Registreren</a></li>
                 @endguest
                 @auth
+
+               <li><button href="{{route("cart")}}"><i class="bi bi-cart text-4xl -mr-24"></i></li></button>
                 <div>
                     
                     <button id="dropdown_main_button" data-dropdown-toggle="dropdown_main"
@@ -35,7 +37,9 @@
                     <div id="dropdown_main" class="z-10 mt-10 ml-5 hidden   bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
                         <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdown_main_button">
                             <li>
+                                @if(Auth::user()->role === "admin")
                                 <a href="{{route("admin.index")}}" class="block px-4 py-2 hover:bg-gray-100">Beheer paneel</a>
+                                @endif
                             </li>
                             <li>
                                 <a href="#" class="block px-4 py-2 hover:bg-gray-100">Profiel</a>
@@ -43,6 +47,9 @@
                             <li>
                                 <a href="#" class="block px-4 py-2 hover:bg-gray-100">Mijn historie</a>
                             </li>
+                            
+                            <a href="{{route("cart")}}" class="block px-4 py-2 hover:bg-gray-100"><li>Winkelwagen</li></a>
+                            
                             <li>
                                 <a href="" class="block px-4 py-2 hover:bg-gray-100"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Uitloggen</a>
